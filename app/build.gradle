@@ -1,0 +1,26 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 21
+    buildToolsVersion "21.0.0"
+
+    defaultConfig {
+        applicationId "vulcan.com.ion_android"
+        minSdkVersion 19
+        targetSdkVersion 21
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.mobsandgeeks:android-saripaar:1.0.2'
+    compile 'com.android.support:support-v4:21.0.0'
+    compile 'com.mcxiaoke.volley:library:1.0.9'  //todo - find the google one
+}
