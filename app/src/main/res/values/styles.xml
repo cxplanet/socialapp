@@ -1,0 +1,12 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="android:Theme.Holo.Light">
+        <item name="android:popupMenuStyle">@style/Social.PopupMenu</item>
+    </style>
+
+    <style name="Social.PopupMenu" parent="android:Widget.Holo.Light.ListPopupWindow">
+        <item name="android:popupBackground">@color/dark_grey</item>
+    </style>
+
+</resources>
