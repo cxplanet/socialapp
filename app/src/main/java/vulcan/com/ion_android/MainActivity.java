@@ -2,17 +2,35 @@ package vulcan.com.ion_android;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.GridLayout;
 
 
 public class MainActivity extends Activity {
+
+    private Button mLoginButton;
+    private Button mSignupButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        // decide whether to login or not
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        mLoginButton = (Button)findViewById(R.id.login_button);
+        mSignupButton = (Button)findViewById(R.id.signup_button);
+
+        mLoginButton.setTextColor(getResources().getColor(R.color.dark_grey));
+    }
+
+    public void handleAuthButtonClick(Button button) {
+        //TODO - bold the currently selected button, and dim the other
     }
 
 
