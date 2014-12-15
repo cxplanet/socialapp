@@ -1,6 +1,8 @@
 package vulcan.com.ion_android;
 
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -23,10 +25,12 @@ public class MainActivity extends Activity {
         // decide whether to login or not
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-        mLoginButton = (Button)findViewById(R.id.login_button);
-        mSignupButton = (Button)findViewById(R.id.signup_button);
+        mLoginButton = (Button)findViewById(R.id.button_login);
 
-        mLoginButton.setTextColor(getResources().getColor(R.color.dark_grey));
+        mSignupButton = (Button)findViewById(R.id.button_signin);
+        mSignupButton.setTextColor(getResources().getColor(R.color.light_grey));
+
+        loadAuthFragment();
     }
 
     public void handleAuthButtonClick(Button button) {
@@ -73,6 +77,16 @@ public class MainActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void loadAuthFragment()
+    {
+        Fragment authFragment = new LoginFragment()
+        FragmentManager fragMgr = getFragmentManager();
+        fragMgr.beginTransaction()
+                .replace(R.id.auth_container, authFragment)
+                .addToBackStack("auth")
+                .commit();
     }
 
     public boolean onMenuItemClick(MenuItem item) {
