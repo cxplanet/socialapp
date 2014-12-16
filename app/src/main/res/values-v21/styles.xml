@@ -2,6 +2,7 @@
 <resources>
     <style name="AppTheme" parent="android:Theme.Material.Light">
         <item name="android:colorPrimary">#CCDDCC</item>
+        <item name="android:colorPrimaryDark">#CCDDCC</item>
     </style>
 
 </resources>

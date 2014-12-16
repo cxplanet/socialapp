@@ -9,5 +9,7 @@
     <string name="new_post_title">New Post</string>
     <string name="login_title">Login</string>
     <string name="main_activity_text">This app is a collection of network aware activities that would be used in a social networking app. There is minimal UI in the activities, it is meant more for finding components that provide the underlying plumbing. You can select activities from the settings menu.</string>
+    <string name="login">Login</string>
+    <string name="signup">Signup</string>
 
 </resources>

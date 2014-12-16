@@ -9,8 +9,8 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
-import android.widget.GridLayout;
 
 
 public class MainActivity extends Activity {
@@ -25,16 +25,35 @@ public class MainActivity extends Activity {
         // decide whether to login or not
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-        mLoginButton = (Button)findViewById(R.id.button_login);
-
         mSignupButton = (Button)findViewById(R.id.button_signin);
         mSignupButton.setTextColor(getResources().getColor(R.color.light_grey));
+        mSignupButton.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                showSignup();
+            }
+        });
 
-        loadAuthFragment();
+        mLoginButton = (Button)findViewById(R.id.button_login);
+        mLoginButton.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                showLogin();
+            }
+        });
+
+        showLogin();
     }
 
-    public void handleAuthButtonClick(Button button) {
-        //TODO - bold the currently selected button, and dim the other
+    public void handleAuthButtonClick(View button) {
+        Button b = (Button)button;
+        if (b == mLoginButton)
+        {
+            showLogin();
+        } else if (b == mSignupButton)
+        {
+            showSignup();
+        }
     }
 
 
@@ -79,9 +98,24 @@ public class MainActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void loadAuthFragment()
+    private void showLogin()
     {
-        Fragment authFragment = new LoginFragment()
+        mLoginButton.setTextColor(getResources().getColor(R.color.black));
+        mSignupButton.setTextColor(getResources().getColor(R.color.light_grey));
+        Fragment authFragment = new LoginFragment();
+        loadAuthFragment(authFragment);
+    }
+
+    private void showSignup()
+    {
+        mLoginButton.setTextColor(getResources().getColor(R.color.light_grey));
+        mSignupButton.setTextColor(getResources().getColor(R.color.black));
+        Fragment authFragment = new SignupFragment();
+        loadAuthFragment(authFragment);
+    }
+
+    private void loadAuthFragment(Fragment authFragment)
+    {
         FragmentManager fragMgr = getFragmentManager();
         fragMgr.beginTransaction()
                 .replace(R.id.auth_container, authFragment)
