@@ -12,5 +12,5 @@ public interface AuthListener {
     public void onAuthenticationSucceeded();
 
     public void onAuthenticationFailed(String failureMsg);
-    
+
 }

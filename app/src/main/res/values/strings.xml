@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Social</string>
+    <string name="app_name">Social App</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="signup_title">Signup</string>
     <string name="file_upload_title">File Upload</string>
     <string name="new_post_title">New Post</string>
     <string name="login_title">Login</string>
-    <string name="main_activity_text">This app is a collection of network aware activities that would be used in a social networking app. There is minimal UI in the activities, it is meant more for finding components that provide the underlying plumbing. You can select activities from the settings menu.</string>
+    <string name="main_activity_text">Social App is a collection of network aware activities that would be used with a social networking web service. Currently it uses data provided by the Yopp webservice.</string>
     <string name="login">Login</string>
     <string name="signup">Signup</string>
 

@@ -3,5 +3,6 @@
     <color name="dark_grey">#2f4f4f</color>
     <color name="splash_text">#323232</color>
     <color name="light_grey">#a8a8a8</color>
+    <color name="light_green">#ccddcc</color>
     <color name="black">#000000</color>
 </resources>

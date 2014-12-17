@@ -21,9 +21,9 @@
                   android:label="@string/signup_title" />
         <activity android:name=".LoginActivity"
             android:label="@string/login_title" />
-        <activity android:name=".FileUploadActivity"
+        <activity android:name=".ImagePostActivity"
             android:label="@string/file_upload_title" />
-        <activity android:name=".AddPostActivity"
+        <activity android:name=".AddImagePostActivity"
             android:label="New Post" />
     </application>
 

@@ -3,12 +3,21 @@ package vulcan.com.ion_android.net;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.view.inputmethod.InputMethodManager;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import vulcan.com.ion_android.SocialApp;
 
@@ -17,6 +26,8 @@ import vulcan.com.ion_android.SocialApp;
  */
 public class SessionMgr {
 
+    // todo - maintain a list of listeners, as we are likely to
+    // hit a 401 while multiple requests are being made
     private final static SessionMgr theInstance = new SessionMgr();
 
     private String mCurrAuthToken;
@@ -59,6 +70,54 @@ public class SessionMgr {
             // TODO
             e.printStackTrace();
         }
+    }
+
+    public void reauthUser(final AuthListener listener)
+    {
+        //todo - call the reauth call
+    }
+
+    public void signinUser(final String username, final String password, final AuthListener listener)
+    {
+        String signinUrl = buildUrl(SessionMgr.OAUTH_LOGIN);
+
+        StringRequest req = new StringRequest(Request.Method.POST, signinUrl,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        if (response!= null) {
+                            try {
+                                JSONObject tokenData = new JSONObject(response);
+                                updateAuthData(tokenData);
+                                //showToastMessage("Successfully signed in");
+                                listener.onAuthenticationSucceeded();
+
+                            } catch (JSONException e) {
+                                // TODO
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        ///showToastMessage("Unable to log in: " + error.getLocalizedMessage());
+                        listener.onAuthenticationFailed(error.getLocalizedMessage());
+                    }
+                })
+        {
+
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("username", username);
+                params.put("password", password);
+                params.put("grant_type", "password");
+                params.put("client_id", "1");
+                return params;
+            };
+        };
+        SessionMgr.getInstance().mRequestQueue.add(req);
     }
 
     public String getAuthorizationData()
