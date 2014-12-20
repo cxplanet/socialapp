@@ -101,19 +101,22 @@ public class SignupActivity extends BaseActivity {
 
         String signupUrl = SessionMgr.buildUrl(SessionMgr.SIGNUP);
         JSONObject signupData = buildJsonDataForSignup();
-        Toast.makeText(this, "Registering user", Toast.LENGTH_SHORT);
+        Toast.makeText(this, "Registering user", Toast.LENGTH_SHORT).show();
 
         JsonObjectRequest req = new JsonObjectRequest(signupUrl, signupData,
             new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
                     // display JSON response
-                    Toast.makeText(SignupActivity.this, "Successfully signed up user", Toast.LENGTH_LONG);
+                    Toast.makeText(SignupActivity.this, "Successfully signed up user", Toast.LENGTH_LONG).show();
                 }
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    String err = error.getLocalizedMessage();
+                    String err;
+                    if (error.networkResponse.statusCode == 409)
+                        err = "the username or email already exists";
+                    else err = error.getLocalizedMessage();
                     Toast.makeText(SignupActivity.this, "An error occured while signing up: " + err, Toast.LENGTH_LONG).show();
                 }
             });

@@ -9,6 +9,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/login_username"
         android:hint="username"
+        android:singleLine="true"
         android:imeOptions="actionNext" />
 
     <EditText
@@ -17,6 +18,7 @@
         android:inputType="textPassword"
         android:ems="10"
         android:id="@+id/login_password"
+        android:singleLine="true"
         android:password="true"
         android:hint="password"
         android:imeOptions="actionDone" />

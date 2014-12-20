@@ -3,13 +3,13 @@ package vulcan.com.ion_android.net;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.view.inputmethod.InputMethodManager;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -19,6 +19,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import vulcan.com.ion_android.Constants;
 import vulcan.com.ion_android.SocialApp;
 
 /**
@@ -27,7 +28,6 @@ import vulcan.com.ion_android.SocialApp;
 public class SessionMgr {
 
     // todo - maintain a list of listeners, as we are likely to
-    // hit a 401 while multiple requests are being made
     private final static SessionMgr theInstance = new SessionMgr();
 
     private String mCurrAuthToken;
@@ -40,13 +40,18 @@ public class SessionMgr {
 
     public static final String SIGNUP = "/person/signup?client_id=1";
     public static final String OAUTH_LOGIN = "/oauth2/token?client_id=1";
+    public static final String IMAGE_POST = "/yopps?client_id=1";
+    public static final String YOPPS_FOR_CTA = "/cta/" + Constants.YOPP_TOPIC_ID + "/yopps";
 
     public static RequestQueue mRequestQueue;
+    public static ImageLoader mImageLoader;
 
     private SessionMgr()
     {
         Context ctx = SocialApp.getInstance().getApplicationContext();
         mRequestQueue = Volley.newRequestQueue(ctx);
+        mImageLoader = new ImageLoader(this.mRequestQueue,
+                new LruBitmapCache());
         mPrefs = PreferenceManager.getDefaultSharedPreferences(ctx);
     }
 
@@ -61,6 +66,7 @@ public class SessionMgr {
 
     public void updateAuthData(JSONObject tokenData) {
         try {
+            // todo - validate data
             String authToken = tokenData.getString("access_token");
             String tokenType = tokenData.getString("token_type");
             String reauthToken = tokenData.getString("refresh_token");

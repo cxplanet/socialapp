@@ -5,7 +5,7 @@ package vulcan.com.ion_android;
  */
 public class Constants {
 
-    public static long TOPIC_ID = 122202838502736897L; //CTA_ID
-    public static long TOPIC_ORG_ID = 122200511779701762L; //CTA_ORG_ID
+    public static long DEMO_TOPIC_ID = 122202838502736897L; //fish stickers
+    public static long YOPP_TOPIC_ID = 122202838502736897L; //yopp
 
 }

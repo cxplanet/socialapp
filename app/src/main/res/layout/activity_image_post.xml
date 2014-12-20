@@ -13,19 +13,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/post_title"
+        android:singleLine="true"
+        android:imeOptions="actionNext"
         android:hint="title" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/post_author"
-        android:hint="author" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/post_body"
-        android:hint="post" />
+        android:id="@+id/post_description"
+        android:singleLine="true"
+        android:imeOptions="actionDone"
+        android:hint="description" />
 
     <Button
         android:layout_width="wrap_content"

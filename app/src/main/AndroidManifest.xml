@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="vulcan.com.ion_android" >
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
-    <uses-permission android:name="android.permission.VIBRATE"></uses-permission>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <application
         android:name=".SocialApp"
         android:allowBackup="true"
@@ -22,9 +23,9 @@
         <activity android:name=".LoginActivity"
             android:label="@string/login_title" />
         <activity android:name=".ImagePostActivity"
-            android:label="@string/file_upload_title" />
-        <activity android:name=".AddImagePostActivity"
             android:label="New Post" />
+        <activity android:name=".PostListActivity"
+            android:label="Posts" />
     </application>
 
 </manifest>

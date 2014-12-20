@@ -58,10 +58,6 @@ public class BaseActivity extends Activity implements Validator.ValidationListen
                 intent = new Intent(this, PostListActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.action_image_upload:
-                intent = new Intent(this, ImagePostActivity.class);
-                startActivity(intent);
-                break;
         }
 
         return super.onOptionsItemSelected(item);
