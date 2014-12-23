@@ -24,7 +24,7 @@
             android:label="@string/login_title" />
         <activity android:name=".ImagePostActivity"
             android:label="New Post" />
-        <activity android:name=".PostListActivity"
+        <activity android:name=".FetchPostsActivity"
             android:label="Posts" />
     </application>
 

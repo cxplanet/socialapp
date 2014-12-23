@@ -107,7 +107,7 @@ public class LoginActivity extends BaseActivity {
                             try {
                                 JSONObject tokenData = new JSONObject(response);
                                 SessionMgr.getInstance().updateAuthData(tokenData);
-                                showToastMessage("Successfully signed in");
+                                //showToastMessage("Successfully signed in");
 
                             } catch (JSONException e) {
                                 // TODO

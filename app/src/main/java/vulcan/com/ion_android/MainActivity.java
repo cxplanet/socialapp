@@ -12,8 +12,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import vulcan.com.ion_android.net.AuthListener;
 
-public class MainActivity extends BaseActivity {
+
+public class MainActivity extends BaseActivity implements AuthListener{
 
     private Button mLoginButton;
     private Button mSignupButton;
@@ -86,4 +88,13 @@ public class MainActivity extends BaseActivity {
         return true;
     }
 
+    @Override
+    public void onAuthenticationSucceeded() {
+
+    }
+
+    @Override
+    public void onAuthenticationFailed(String failureMsg) {
+
+    }
 }

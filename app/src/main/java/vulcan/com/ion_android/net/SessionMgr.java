@@ -2,7 +2,9 @@ package vulcan.com.ion_android.net;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.preference.PreferenceManager;
+import android.util.LruCache;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -10,6 +12,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -36,7 +39,7 @@ public class SessionMgr {
     private SharedPreferences mPrefs;
 
 
-    private static final String API_BASE_URL = "http://bernard.fayve.com";
+    private static final String API_BASE_URL = "https://bernard.fayve.com";
 
     public static final String SIGNUP = "/person/signup?client_id=1";
     public static final String OAUTH_LOGIN = "/oauth2/token?client_id=1";
@@ -50,8 +53,7 @@ public class SessionMgr {
     {
         Context ctx = SocialApp.getInstance().getApplicationContext();
         mRequestQueue = Volley.newRequestQueue(ctx);
-        mImageLoader = new ImageLoader(this.mRequestQueue,
-                new LruBitmapCache());
+        mImageLoader = new ImageLoader(this.mRequestQueue, new LruBitmapCache());
         mPrefs = PreferenceManager.getDefaultSharedPreferences(ctx);
     }
 
@@ -76,6 +78,51 @@ public class SessionMgr {
             // TODO
             e.printStackTrace();
         }
+    }
+
+    private ImageLoader buildOauthImageLoader(RequestQueue reqQueue){
+        ImageLoader imageLoader = new ImageLoader(reqQueue,
+                new ImageLoader.ImageCache() {
+                    private final LruCache<String, Bitmap>
+                            cache = new LruCache<String, Bitmap>(20);
+
+                    @Override
+                    public Bitmap getBitmap(String url) {
+                        return cache.get(url);
+                    }
+
+                    @Override
+                    public void putBitmap(String url, Bitmap bitmap) {
+                        cache.put(url, bitmap);
+                    }
+                }) {
+            @Override
+            protected Request<Bitmap> makeImageRequest(String requestUrl, int maxWidth, int maxHeight, final String cacheKey) {
+                //return super.makeImageRequest(requestUrl, maxWidth, maxHeight, cacheKey);
+
+                return new ImageRequest(requestUrl, new Response.Listener<Bitmap>() {
+                    @Override
+                    public void onResponse(Bitmap response) {
+                        onGetImageSuccess(cacheKey, response);
+                    }
+                }, maxWidth, maxHeight,
+                        Bitmap.Config.RGB_565, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        onGetImageError(cacheKey, error);
+                    }
+                }) {
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        HashMap<String, String> params = new HashMap<String, String>();
+                        params.put("Authorization", SessionMgr.getInstance().mCurrAuthToken);
+                        return params;
+                    }
+                };
+            }
+        };
+
+        return imageLoader;
     }
 
     public void reauthUser(final AuthListener listener)

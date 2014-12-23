@@ -6,6 +6,6 @@ package vulcan.com.ion_android;
 public class Constants {
 
     public static long DEMO_TOPIC_ID = 122202838502736897L; //fish stickers
-    public static long YOPP_TOPIC_ID = 122202838502736897L; //yopp
+    public static long YOPP_TOPIC_ID = 113572119714989057L; //yopp
 
 }

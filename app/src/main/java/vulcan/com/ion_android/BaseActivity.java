@@ -55,7 +55,7 @@ public class BaseActivity extends Activity implements Validator.ValidationListen
                 startActivity(intent);
                 break;
             case R.id.action_post_list:
-                intent = new Intent(this, PostListActivity.class);
+                intent = new Intent(this, FetchPostsActivity.class);
                 startActivity(intent);
                 break;
         }

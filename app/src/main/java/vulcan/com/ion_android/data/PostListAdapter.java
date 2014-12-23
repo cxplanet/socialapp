@@ -3,6 +3,7 @@ package vulcan.com.ion_android.data;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,7 +62,7 @@ public class PostListAdapter extends BaseAdapter {
 
         Post p = postItems.get(position);
 
-        thumbNail.setImageUrl(p., imageLoader);
+        thumbNail.setImageUrl(p.mThumbnailUrl, imageLoader);
         title.setText(p.mTitle);
         desc.setText(p.mDesc);
         comments.setText(p.mComments);

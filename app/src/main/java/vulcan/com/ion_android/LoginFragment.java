@@ -2,6 +2,7 @@ package vulcan.com.ion_android;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -68,7 +69,10 @@ public class LoginFragment extends Fragment implements AuthListener{
 
     @Override
     public void onAuthenticationSucceeded() {
-        Toast.makeText(getActivity(), "Successfully signed in", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getActivity(), "Successfully signed in", Toast.LENGTH_SHORT).show();
+        Intent i = new Intent(getActivity(), FetchPostsActivity.class);
+        startActivity(i);
+        getActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 
     @Override
