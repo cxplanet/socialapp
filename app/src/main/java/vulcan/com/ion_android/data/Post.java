@@ -22,35 +22,7 @@ public class Post
     public String mDesc;
     public String mComments;
 
-    public static List<Post> buildPostList(JSONObject response)
-    {
-        ArrayList<Post> posts = new ArrayList<Post>();
-        // we assume the data is found in a dictionary call 'data'
-        try {
-            if (response.getJSONObject("data") != null)
-            {
-                JSONObject jsonData = response.getJSONObject("data");
-                JSONArray postObjs = jsonData.getJSONArray("items");
-                for (int i = 0; i < postObjs.length(); i++)
-                {
-                    Post p = buildPost(postObjs.getJSONObject(i));
-                    posts.add(p);
-                }
-            }
-            else
-            {
-                Log.d("Post.buildPosts", "No data dictionary found in response");
-            }
-        }
-        catch(JSONException jsonEx)
-        {
-
-        }
-        return posts;
-    }
-
-
-    private static Post buildPost(JSONObject post) throws JSONException
+    public static Post buildPost(JSONObject post) throws JSONException
     {
         Post p = new Post();
         String ugcId = post.getString("id");

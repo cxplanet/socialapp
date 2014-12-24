@@ -1,9 +1,6 @@
 package vulcan.com.ion_android;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -19,15 +16,21 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.google.gson.JsonObject;
-import com.koushikdutta.async.future.FutureCallback;
-import com.koushikdutta.ion.Ion;
-import com.koushikdutta.ion.ProgressCallback;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.content.StringBody;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 import vulcan.com.ion_android.net.SessionMgr;
 
@@ -35,7 +38,7 @@ import vulcan.com.ion_android.net.SessionMgr;
  * Created by jayl on 12/1/14.
  * NOTE: Currently using ion for file uploads, as Volley is not designed for large files.
  */
-public class ImagePostActivity extends BaseActivity {
+public class VideoPostActivity extends BaseActivity {
     private EditText mTitleInput;
     private EditText mDescInput;
     private String mCurrImagename;
@@ -59,7 +62,7 @@ public class ImagePostActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_PICK,
-                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(intent, 0);
             }
         });
@@ -68,59 +71,42 @@ public class ImagePostActivity extends BaseActivity {
 
             @Override
             public void onClick(View arg0) {
-                Toast.makeText(ImagePostActivity.this, "Uploading post", Toast.LENGTH_SHORT).show();
-                uploadPost();
+            Toast.makeText(VideoPostActivity.this, "Uploading post", Toast.LENGTH_SHORT).show();
+            try {
+                uploadVideo("todo", "to-do");
+            } catch (IOException ioe)
+            {
+
+            }
             }
         });
-
     }
 
-    private void togglePostControls(boolean hidePostFields)
-    {
-        if (hidePostFields)
-        {
-            mUploadButton.setVisibility(View.INVISIBLE);
+    private void uploadVideo(String videoPath, String uploadUrl) throws IOException {
+
+        // TODO Consider stashing an instance
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpPost httpPost = new HttpPost(uploadUrl);
+        httpPost.addHeader("Authorization", SessionMgr.getInstance().getAuthorizationToken());
+
+        FileBody filebody = new FileBody(new File(videoPath));
+        StringBody title = new StringBody("Filename: " + videoPath, ContentType.TEXT_PLAIN);
+        StringBody description = new StringBody("This is a description of the video", ContentType.TEXT_PLAIN);
+
+        MultipartEntityBuilder builder = MultipartEntityBuilder.create();
+        builder.addPart("videoFile", filebody);
+        builder.addPart("title", title);
+        builder.addPart("description", description);
+        httpPost.setEntity(builder.build());
+
+        Log.d("VideoPostActivity", "executing request " + httpPost.getRequestLine());
+        HttpResponse response = httpClient.execute( httpPost );
+        HttpEntity resEntity = response.getEntity( );
+        if (resEntity != null) {
+            resEntity.consumeContent( );
         }
-    }
 
-    private void uploadPost()
-    {
-        final File fileToUpload = new File(mCurrImagename);
-        final String title = mTitleInput.getText().toString();
-        final String desc = mDescInput.getText().toString();
-        Ion.with(this)
-                .load(SessionMgr.buildUrl(SessionMgr.IMAGE_POST))
-                .setHeader("Authorization", SessionMgr.getInstance().getAuthorizationToken())
-                .uploadProgressHandler(new ProgressCallback() {
-                    @Override
-                    public void onProgress(long uploaded, long total) {
-                        // Displays the progress bar for the first time.
-//                        mNotifyManager.notify(notificationId, mBuilder.build());
-//                        mBuilder.setProgress((int) total, (int) uploaded, false);
-                    }
-                })
-                .setTimeout(3 * 60 * 1000)
-                .setMultipartParameter("title", title)
-                .setMultipartParameter("description", desc)
-                .setMultipartFile("upload", "image/jpeg", fileToUpload)
-                .asJsonObject()
-                        // run a callback on completion
-                .setCallback(new FutureCallback<JsonObject>() {
-                    @Override
-                    public void onCompleted(Exception e, JsonObject result) {
-                        // When the loop is finished, updates the notification
-//                        mBuilder.setContentText("Upload complete")
-//                                // Removes the progress bar
-//                                .setProgress(0, 0, false);
-//                        mNotifyManager.notify(notificationId, mBuilder.build());
-                        Log.d("ImagePostActivity", result.toString());
-                        if (e != null) {
-                            Toast.makeText(ImagePostActivity.this, "Error uploading file", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                        Toast.makeText(ImagePostActivity.this, "File upload complete", Toast.LENGTH_SHORT).show();
-                    }
-                });
+        httpClient.getConnectionManager().shutdown( );
     }
 
     @Override
@@ -167,7 +153,7 @@ public class ImagePostActivity extends BaseActivity {
         cursor.close();
 
         cursor = getContentResolver().query(
-                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                 null, MediaStore.Images.Media._ID + " = ? ", new String[]{document_id}, null);
         cursor.moveToFirst();
         String path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));

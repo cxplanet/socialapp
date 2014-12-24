@@ -1,7 +1,6 @@
 package vulcan.com.ion_android.net;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.Response;
 import com.android.volley.Response.Listener;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.toolbox.StringRequest;
@@ -24,7 +23,7 @@ public class OauthStringRequest extends StringRequest {
         HashMap<String, String> headers = new HashMap<String, String>();
         headers.put("Content-Type", "application/json");
         headers.put("Accept", "application/json");
-        headers.put("Authorization", SessionMgr.getInstance().getAuthorizationData());
+        headers.put("Authorization", SessionMgr.getInstance().getAuthorizationToken());
         return headers;
     }
 

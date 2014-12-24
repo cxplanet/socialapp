@@ -18,7 +18,7 @@ public class OauthJsonObjectRequest extends JsonObjectRequest{
 
     public Map<String, String> getHeaders() throws AuthFailureError {
         HashMap<String, String> headers = new HashMap<String, String>();
-        headers.put("Authorization", SessionMgr.getInstance().getAuthorizationData());
+        headers.put("Authorization", SessionMgr.getInstance().getAuthorizationToken());
         return headers;
     }
 }

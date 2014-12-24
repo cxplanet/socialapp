@@ -44,7 +44,7 @@ public class SessionMgr {
     public static final String SIGNUP = "/person/signup?client_id=1";
     public static final String OAUTH_LOGIN = "/oauth2/token?client_id=1";
     public static final String IMAGE_POST = "/yopps?client_id=1";
-    public static final String YOPPS_FOR_CTA = "/cta/" + Constants.YOPP_TOPIC_ID + "/yopps";
+    public static final String YOPPS_FOR_CTA = "/cta/" + Constants.YOPP_TOPIC_ID + "/yopps/";
 
     public static RequestQueue mRequestQueue;
     public static ImageLoader mImageLoader;
@@ -173,7 +173,7 @@ public class SessionMgr {
         SessionMgr.getInstance().mRequestQueue.add(req);
     }
 
-    public String getAuthorizationData()
+    public String getAuthorizationToken()
     {
         return mCurrAuthToken;
     }
