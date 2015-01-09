@@ -25,12 +25,10 @@ import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 
 import vulcan.com.ion_android.net.SessionMgr;
 
@@ -49,7 +47,7 @@ public class VideoPostActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_image_post);
+        setContentView(R.layout.activity_new_post);
 
         mTitleInput = (EditText)findViewById(R.id.post_title);
         mDescInput = (EditText)findViewById(R.id.post_description);

@@ -1,0 +1,22 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
+    <item android:id="@+id/actionbar_new_post"
+    android:icon="@drawable/ic_action_new"
+    android:title="New Post"
+    android:showAsAction="ifRoom" />
+    <item android:id="@+id/action_post_list"
+        android:title="Posts"
+        android:showAsAction="never" />
+    <item android:id="@+id/action_new_post"
+        android:title="Add a Post"
+        android:showAsAction="never" />
+    <item android:id="@+id/action_signup"
+        android:title="Signup"
+        android:showAsAction="never" />
+    <item android:id="@+id/action_login"
+        android:title="Login"
+        android:showAsAction="never" />
+    <item android:id="@+id/action_settings"
+        android:title="@string/action_settings"
+        android:showAsAction="never" />
+</menu>

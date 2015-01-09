@@ -5,25 +5,26 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
-import com.mobsandgeeks.saripaar.Rule;
+import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
+
+import java.util.List;
 
 /**
  * Created by jayl on 12/9/14.
  */
 public class BaseActivity extends Activity implements Validator.ValidationListener {
 
-    private Validator mTextValidator;
+    protected Validator mInputValidator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mTextValidator = new Validator(this);
-        mTextValidator.setValidationListener(this);
+         mInputValidator = new Validator(this);
+         mInputValidator.setValidationListener(this);
     }
 
     @Override
@@ -51,11 +52,11 @@ public class BaseActivity extends Activity implements Validator.ValidationListen
                 startActivity(intent);
                 break;
             case R.id.action_new_post:
-                intent = new Intent(this, ImagePostActivity.class);
+                intent = new Intent(this, NewPostActivity.class);
                 startActivity(intent);
                 break;
             case R.id.action_post_list:
-                intent = new Intent(this, FetchPostsActivity.class);
+                intent = new Intent(this, PostsActivity.class);
                 startActivity(intent);
                 break;
         }
@@ -74,7 +75,9 @@ public class BaseActivity extends Activity implements Validator.ValidationListen
     }
 
     @Override
-    public void onValidationFailed(View failedView, Rule<?> failedRule) {
-        showToastMessage("Validation Failed");
+    public void onValidationFailed(List<ValidationError> errors) {
+        for (ValidationError error : errors) {
+            // Do anything you want :)
+        }
     }
 }

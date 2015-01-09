@@ -7,4 +7,6 @@
     <dimen name="post_comments">12dip</dimen>
     <dimen name="cta">13dip</dimen>
     <dimen name="time">12dip</dimen>
+    <item name="floatinghintedittext_hint_scale" type="dimen" format="float">0.6</item>
+    <item name="floatinghintedittext_animation_steps" type="dimen" format="integer">6</item>
 </resources>

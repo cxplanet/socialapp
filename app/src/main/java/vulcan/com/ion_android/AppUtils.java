@@ -1,5 +1,10 @@
 package vulcan.com.ion_android;
 
+import android.view.View;
+import android.widget.TextView;
+
+import com.mobsandgeeks.saripaar.ValidationError;
+
 /**
  * Created by jayl on 12/3/14.
  */

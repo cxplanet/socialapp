@@ -22,9 +22,11 @@
                   android:label="@string/signup_title" />
         <activity android:name=".LoginActivity"
             android:label="@string/login_title" />
-        <activity android:name=".ImagePostActivity"
-            android:label="New Post" />
-        <activity android:name=".FetchPostsActivity"
+        <activity android:name=".NewPostActivity"
+            android:label="New Post"
+            android:parentActivityName=".PostsActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden"/> >
+        <activity android:name=".PostsActivity"
             android:label="Posts" />
     </application>
 

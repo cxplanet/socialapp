@@ -1,8 +1,11 @@
 package vulcan.com.ion_android;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -24,7 +27,7 @@ import vulcan.com.ion_android.net.SessionMgr;
 /**
  * Created by jayl on 12/4/14.
  */
-public class FetchPostsActivity extends BaseActivity {
+public class PostsActivity extends BaseActivity {
 
     private ListView mListView;
     private PostListAdapter mAdapter;
@@ -45,6 +48,29 @@ public class FetchPostsActivity extends BaseActivity {
         mHasMorePosts = true;
 
         fetchPosts();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_posts, menu);
+        return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int itemId = item.getItemId();
+        switch (itemId) {
+            case R.id.actionbar_new_post:
+                startActivity(new Intent(this, NewPostActivity.class));
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     protected int currPostCount()
@@ -78,7 +104,7 @@ public class FetchPostsActivity extends BaseActivity {
                     if (error.networkResponse.statusCode == 401)
                         err = "this request requires authorization";
                     else err = error.getLocalizedMessage();
-                    Toast.makeText(FetchPostsActivity.this, "An error occurred while fetching posts: " + err, Toast.LENGTH_LONG).show();
+                    Toast.makeText(PostsActivity.this, "An error occurred while fetching posts: " + err, Toast.LENGTH_LONG).show();
                 }
             });
             SessionMgr.getInstance().mRequestQueue.add(req);

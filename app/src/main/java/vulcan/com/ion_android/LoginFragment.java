@@ -70,7 +70,7 @@ public class LoginFragment extends Fragment implements AuthListener{
     @Override
     public void onAuthenticationSucceeded() {
         //Toast.makeText(getActivity(), "Successfully signed in", Toast.LENGTH_SHORT).show();
-        Intent i = new Intent(getActivity(), FetchPostsActivity.class);
+        Intent i = new Intent(getActivity(), PostsActivity.class);
         startActivity(i);
         getActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }

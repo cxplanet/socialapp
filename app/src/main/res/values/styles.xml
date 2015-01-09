@@ -10,4 +10,10 @@
         <item name="android:popupBackground">@color/dark_grey</item>
     </style>
 
+    <style name="Widget"></style>
+
+    <style name="Widget.FloatingHintEditText" parent="@android:style/Widget.EditText">
+        <item name="android:paddingTop">0dp</item>
+    </style>
+
 </resources>
