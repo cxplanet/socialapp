@@ -6,6 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +15,7 @@ import vulcan.com.ion_android.net.SessionMgr;
 /**
  * Created by jayl on 12/19/14.
  */
-public class Post
+public class Post implements Serializable
 {
     public String mUgcId;
     public String mThumbnailUrl;

@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <attr name="floatingHintEditTextStyle" format="reference" />
+    <declare-styleable name="FloatLabelLayout"></declare-styleable>
+    <declare-styleable name="FloatLabelLayout_floatLabelPaddingLeft"></declare-styleable>
+    <declare-styleable name="FloatLabelLayout_floatLabelPaddingTop"></declare-styleable>
+    <declare-styleable name="FloatLabelLayout_floatLabelPaddingRight"></declare-styleable>
+    <declare-styleable name="FloatLabelLayout_floatLabelPaddingBottom"></declare-styleable>
+    <declare-styleable name="FloatLabelLayout_floatLabelHint"></declare-styleable>
+    <declare-styleable name="FloatLabelLayout_floatLabelTextAppearance"></declare-styleable>
 </resources>

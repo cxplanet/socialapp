@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.mobsandgeeks.saripaar.ValidationError;
@@ -80,4 +81,5 @@ public class BaseActivity extends Activity implements Validator.ValidationListen
             // Do anything you want :)
         }
     }
+
 }

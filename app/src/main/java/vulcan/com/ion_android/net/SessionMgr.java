@@ -24,7 +24,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import vulcan.com.ion_android.Constants;
+import vulcan.com.ion_android.common.Constants;
 import vulcan.com.ion_android.SocialApp;
 
 /**
@@ -35,7 +35,6 @@ public class SessionMgr {
     public enum AuthState {
         NO_TOKEN, VALID_TOKEN, EXPIRED_TOKEN
     }
-
 
     // todo - maintain a list of listeners, as we are likely to
     private final static SessionMgr theInstance = new SessionMgr();
@@ -84,6 +83,7 @@ public class SessionMgr {
     private void initAuthData()
     {
         mCurrAuthToken = mPrefs.getString(AUTH_TOKEN_KEY, "");
+        mReauthToken = mPrefs.getString(REAUTH_TOKEN_KEY, "");
         if (mCurrAuthToken.length() > 0) {
             String tokenType = mPrefs.getString(AUTH_TOKEN_TYPE_KEY, "");
             mAuthDataHeader = String.format("%s %s", tokenType, mCurrAuthToken);
@@ -121,7 +121,7 @@ public class SessionMgr {
     {
         AuthState currState = AuthState.NO_TOKEN;
 
-        // 1) do we have a token at all
+        // 1) do we have a token at all - if we don't pass this we return NO_TOKEN
         String token = mPrefs.getString(AUTH_TOKEN_KEY, "");
         if(token.length() > 0)
         {
@@ -134,6 +134,7 @@ public class SessionMgr {
             }
             else
             {
+                // 3) let the client know its expired, so they can use the refresh token
                 String reAuthToken = mPrefs.getString(REAUTH_TOKEN_KEY, "");
                 if (reAuthToken.length() > 0)
                     currState = AuthState.EXPIRED_TOKEN;
@@ -225,7 +226,7 @@ public class SessionMgr {
                 params.put("refresh_token", mReauthToken);
                 params.put("grant_type", "refresh_token");
                 params.put("client_id", "1");
-                params.put("client_secret", "my_secret");
+                params.put("client_secret", "foobar");
                 return params;
             };
         };

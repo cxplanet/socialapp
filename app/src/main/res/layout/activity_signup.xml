@@ -3,48 +3,61 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <EditText
-        android:layout_marginTop="10dp"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
-        android:ems="10"
-        android:id="@+id/input_email"
-        android:layout_gravity="center_horizontal"
-        android:imeOptions="actionNext"
-        android:hint="email address" />
+        android:layout_height="match_parent">
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="vertical" android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <EditText
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:singleLine="true"
+                android:ems="10"
+                android:id="@+id/input_email"
+                android:layout_gravity="center_horizontal"
+                android:imeOptions="actionNext"
+                android:hint="email address" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:id="@+id/input_display_name"
-        android:imeOptions="actionNext"
-        android:hint="display name" />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:singleLine="true"
+                android:ems="10"
+                android:id="@+id/input_display_name"
+                android:imeOptions="actionNext"
+                android:hint="display name" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/input_username"
-        android:imeOptions="actionNext"
-        android:hint="username" />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/input_username"
+                android:singleLine="true"
+                android:ems="10"
+                android:imeOptions="actionNext"
+                android:hint="username" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:ems="10"
-        android:id="@+id/input_password"
-        android:imeOptions="actionDone"
-        android:password="true"
-        android:hint="password" />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:singleLine="true"
+                android:ems="10"
+                android:id="@+id/input_password"
+                android:imeOptions="actionDone"
+                android:password="true"
+                android:hint="password" />
 
-    <Button
-        android:layout_marginTop="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/signup"
-        android:id="@+id/signup_button"
-        android:layout_gravity="center_horizontal" />
+            <Button
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/signup"
+                android:id="@+id/signup_button"
+                android:layout_gravity="center_horizontal" />
+            </LinearLayout>
+    </ScrollView>
 </LinearLayout>

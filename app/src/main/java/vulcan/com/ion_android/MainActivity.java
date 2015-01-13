@@ -23,6 +23,13 @@ public class MainActivity extends BaseActivity implements AuthListener{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //checkSessionState();
+        showUserLanding();
+
+    }
+
+    private void checkSessionState()
+    {
         // TODO - put this in a dispatcher activity
         SessionMgr.AuthState currState = SessionMgr.getInstance().getAuthState();
 
@@ -32,34 +39,11 @@ public class MainActivity extends BaseActivity implements AuthListener{
                 break;
             case EXPIRED_TOKEN:
                 SessionMgr.getInstance().reauthUser(this);
+                break;
             case NO_TOKEN:
                 showUserLanding();
-                showLoginFragment();
                 break;
         }
-    }
-
-    private void showUserLanding() {
-        setContentView(R.layout.activity_main);
-        // decide whether to login or not
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-
-        mSignupButton = (Button) findViewById(R.id.button_signin);
-        mSignupButton.setTextColor(getResources().getColor(R.color.light_grey));
-        mSignupButton.setOnClickListener(new Button.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                showSignup();
-            }
-        });
-
-        mLoginButton = (Button) findViewById(R.id.button_login);
-        mLoginButton.setOnClickListener(new Button.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                showLoginFragment();
-            }
-        });
     }
 
     public void handleAuthButtonClick(View button) {
@@ -87,6 +71,30 @@ public class MainActivity extends BaseActivity implements AuthListener{
         mSignupButton.setTextColor(getResources().getColor(R.color.black));
         Fragment authFragment = new SignupFragment();
         loadAuthFragment(authFragment);
+    }
+
+    private void showUserLanding() {
+        setContentView(R.layout.activity_main);
+        // decide whether to login or not
+
+        mSignupButton = (Button) findViewById(R.id.button_signin);
+        mSignupButton.setTextColor(getResources().getColor(R.color.light_grey));
+        mSignupButton.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                showSignup();
+            }
+        });
+
+        mLoginButton = (Button) findViewById(R.id.button_login);
+        mLoginButton.setTextColor(getResources().getColor(R.color.black));
+        mLoginButton.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                showLoginFragment();
+            }
+        });
+        showLoginFragment();
     }
 
     private void loadAuthFragment(Fragment authFragment)

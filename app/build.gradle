@@ -30,5 +30,6 @@ dependencies {
     compile 'com.android.support:support-v4:21.0.0'
     compile 'org.apache.httpcomponents:httpcore:4.3.3' // multipart support
     compile 'org.apache.httpcomponents:httpmime:4.3.6' // multipart support
-    compile 'com.mcxiaoke.volley:library:1.0.9'  //todo - find the google one
+    compile 'com.mcxiaoke.volley:library:1.0.+'  //todo - find the google one. Ahh, there is no google one...
+    compile 'com.squareup.okhttp:okhttp:2.2.0'
 }

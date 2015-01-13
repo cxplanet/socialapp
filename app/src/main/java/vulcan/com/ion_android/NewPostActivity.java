@@ -43,6 +43,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import vulcan.com.ion_android.common.AppUtils;
 import vulcan.com.ion_android.net.SessionMgr;
 
 /**
@@ -89,7 +90,7 @@ public class NewPostActivity extends BaseActivity {
 
             @Override
             public void onClick(View arg0) {
-                dismissKeyboard();
+                AppUtils.dismissKeyboard(NewPostActivity.this);
                 mInputValidator.validate();
             }
         });
@@ -101,14 +102,6 @@ public class NewPostActivity extends BaseActivity {
         if (hidePostFields)
         {
             mUploadButton.setVisibility(View.INVISIBLE);
-        }
-    }
-
-    private void dismissKeyboard()
-    {
-        InputMethodManager imm = (InputMethodManager)getSystemService(this.INPUT_METHOD_SERVICE);
-        if(imm.isAcceptingText()) { // verify if the soft keyboard is open
-            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
         }
     }
 
@@ -251,7 +244,7 @@ public class NewPostActivity extends BaseActivity {
                 break;
 
             case R.id.actionbar_save_post:
-                dismissKeyboard();
+                AppUtils.dismissKeyboard(this);
                 mInputValidator.validate();
                 break;
         }

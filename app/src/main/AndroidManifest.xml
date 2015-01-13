@@ -12,7 +12,8 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name="vulcan.com.ion_android.MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:windowSoftInputMode="adjustResize|stateHidden" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -25,7 +26,10 @@
         <activity android:name=".NewPostActivity"
             android:label="New Post"
             android:parentActivityName=".PostsActivity"
-            android:windowSoftInputMode="adjustResize|stateHidden"/> >
+            android:windowSoftInputMode="adjustResize|stateHidden"/>
+        <activity android:name=".PostDetailActivity"
+            android:parentActivityName=".PostsActivity"
+            android:label="Post Detail" />
         <activity android:name=".PostsActivity"
             android:label="Posts" />
     </application>

@@ -16,6 +16,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.mobsandgeeks.saripaar.Rule;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -78,6 +80,11 @@ public class VideoPostActivity extends BaseActivity {
             }
             }
         });
+    }
+
+    private void getUploadTicket()
+    {
+
     }
 
     private void uploadVideo(String videoPath, String uploadUrl) throws IOException {

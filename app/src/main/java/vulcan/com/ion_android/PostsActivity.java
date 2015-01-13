@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -40,8 +42,19 @@ public class PostsActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_postslist);
+
         mPostList = new ArrayList<Post>();
         mListView = (ListView) findViewById(R.id.posts_list);
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position,
+                                    long id) {
+
+                Post currPost = mPostList.get(position);
+                showPostDetails(currPost);
+
+            }
+        });
         mAdapter = new PostListAdapter(this, mPostList);
         mListView.setAdapter(mAdapter);
         mListView.setOnScrollListener(new InfiniteScrollListener());
@@ -109,6 +122,13 @@ public class PostsActivity extends BaseActivity {
             });
             SessionMgr.getInstance().mRequestQueue.add(req);
         }
+    }
+
+    protected void showPostDetails(Post post)
+    {
+        Intent intent = new Intent(PostsActivity.this, PostDetailActivity.class);
+        intent.putExtra("post", post);
+        startActivity(intent);
     }
 
     private void parseResponse(JSONObject response)
