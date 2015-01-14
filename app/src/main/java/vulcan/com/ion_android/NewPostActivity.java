@@ -39,6 +39,7 @@ import java.io.FileDescriptor;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -80,9 +81,8 @@ public class NewPostActivity extends BaseActivity {
         mSelectedImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_PICK,
-                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(intent, 0);
+//
+                openImageIntent();
             }
         });
 
@@ -112,11 +112,24 @@ public class NewPostActivity extends BaseActivity {
         final Intent captureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         final PackageManager packageManager = getPackageManager();
         final List<ResolveInfo> listCam = packageManager.queryIntentActivities(captureIntent, 0);
+         // create temp file
+        File tmpImg = new File(Environment.getExternalStorageDirectory(), "temp_img.png");
+        if (tmpImg.exists()) {
+            tmpImg.delete();
+        }
+        try {
+            tmpImg.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
         for(ResolveInfo res : listCam) {
             final String packageName = res.activityInfo.packageName;
             final Intent intent = new Intent(captureIntent);
             intent.setComponent(new ComponentName(res.activityInfo.packageName, res.activityInfo.name));
             intent.setPackage(packageName);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(tmpImg));
             cameraIntents.add(intent);
         }
         // Filesystem.
@@ -124,52 +137,13 @@ public class NewPostActivity extends BaseActivity {
         final Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
 
         // Chooser of filesystem options.
-        final Intent chooserIntent = Intent.createChooser(galleryIntent, "Select Source");
+        final Intent chooserIntent = Intent.createChooser(galleryIntent, "Image Source");
 
         // Add the camera options.
         chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, cameraIntents.toArray(new Parcelable[]{}));
 
         startActivityForResult(chooserIntent, IMAGE_CAPTURE_REQUEST);
     }
-
-
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data)
-//    {
-//        if(resultCode == RESULT_OK)
-//        {
-//            if(requestCode == IMAGE_CAPTURE_REQUEST)
-//            {
-//                final boolean isCamera;
-//                if(data == null)
-//                {
-//                    isCamera = true;
-//                }
-//                else
-//                {
-//                    final String action = data.getAction();
-//                    if(action == null)
-//                    {
-//                        isCamera = false;
-//                    }
-//                    else
-//                    {
-//                        isCamera = action.equals(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-//                    }
-//                }
-//
-//                Uri selectedImageUri;
-//                if(isCamera)
-//                {
-//                    //selectedImageUri = outputFileUri;
-//                }
-//                else
-//                {
-//                    selectedImageUri = data == null ? null : data.getData();
-//                }
-//            }
-//        }
-//    }
 
     private void uploadPost()
     {
@@ -239,9 +213,9 @@ public class NewPostActivity extends BaseActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int itemId = item.getItemId();
         switch (itemId) {
-            case R.id.actionbar_attach_photo:
-                openImageIntent();
-                break;
+//            case R.id.actionbar_attach_photo:
+//                openImageIntent();
+//                break;
 
             case R.id.actionbar_save_post:
                 AppUtils.dismissKeyboard(this);
@@ -257,19 +231,29 @@ public class NewPostActivity extends BaseActivity {
         // TODO Auto-generated method stub
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (resultCode == RESULT_OK) {
+        if (requestCode == IMAGE_CAPTURE_REQUEST && resultCode == RESULT_OK) {
             Uri targetUri = data.getData();
 
-            mCurrImagename = getImagePath(targetUri);
-            Log.d(this.getClass().getName(), "Image selection: " + mCurrImagename);
-            Bitmap bitmap;
-            final BitmapFactory.Options options = new BitmapFactory.Options();
-            try {
-                bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(targetUri));
-                mSelectedImg.setImageBitmap(bitmap);
-            } catch (FileNotFoundException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+            if (targetUri == null)
+            {
+                // assume its a live photo
+                Bitmap photo = (Bitmap) data.getExtras().get("data");
+                mSelectedImg.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                mSelectedImg.setImageBitmap(photo);
+
+            } else {
+
+                mCurrImagename = getImagePath(targetUri);
+                Log.d(this.getClass().getName(), "Image selection: " + mCurrImagename);
+                Bitmap bitmap;
+                final BitmapFactory.Options options = new BitmapFactory.Options();
+                try {
+                    bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(targetUri));
+                    mSelectedImg.setImageBitmap(bitmap);
+                } catch (FileNotFoundException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
             }
         }
     }

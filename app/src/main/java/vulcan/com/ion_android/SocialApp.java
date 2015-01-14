@@ -9,7 +9,6 @@ import android.content.res.Configuration;
 public class SocialApp extends Application {
     private static SocialApp theSingleton;
 
-
     public static SocialApp getInstance(){
         return theSingleton;
     }

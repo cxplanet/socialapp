@@ -45,25 +45,27 @@ public class VideoPostActivity extends BaseActivity {
     private ImageView mSelectedImg;
     private Button mImagePicker;
     private Button mUploadButton;
+    private String mSelectedVideoPath;
+
+    private final int SELECT_VIDEO = 100002;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_post);
+        setContentView(R.layout.activity_video_post);
 
         mTitleInput = (EditText)findViewById(R.id.post_title);
         mDescInput = (EditText)findViewById(R.id.post_description);
 
         mUploadButton = (Button)findViewById(R.id.post_data_button);
-        mUploadButton.setText("Create Post");
+        mUploadButton.setText("Upload Video");
 
         mSelectedImg = (ImageView)findViewById(R.id.upload_image);
         mSelectedImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_PICK,
-                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(intent, 0);
+            Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Video.Media.INTERNAL_CONTENT_URI );
+            startActivityForResult(i, SELECT_VIDEO);
             }
         });
 
@@ -131,24 +133,34 @@ public class VideoPostActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // TODO Auto-generated method stub
-        super.onActivityResult(requestCode, resultCode, data);
-
+    @ Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
-            Uri targetUri = data.getData();
-            mCurrImagename = getImagePath(targetUri);
-            Bitmap bitmap;
-            try {
-                bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(targetUri));
-                mSelectedImg.setImageBitmap(bitmap);
-            } catch (FileNotFoundException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+            if (requestCode == SELECT_VIDEO) {
+                mSelectedVideoPath = getImagePath(data.getData());
+                if(mSelectedVideoPath == null) {
+                    Toast.makeText(this, "Selected video is stored in the cloud", Toast.LENGTH_SHORT).show();
+                } else {
+                    /**
+                     * try to do something there
+                     * selectedVideoPath is path to the selected video
+                     */
+                }
             }
         }
     }
+
+    public String getPath(Uri uri) {
+        String[] proj = { MediaStore.Images.Media.DATA };
+        Cursor cursor = getContentResolver().query(uri, proj, null, null, null);
+        if(cursor!=null) {
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DATA);
+            cursor.moveToFirst();
+            return cursor.getString(column_index);
+        }
+        else return null;
+    }
+
 
     public String getImagePath(Uri uri){
         Cursor cursor = getContentResolver().query(uri, null, null, null, null);

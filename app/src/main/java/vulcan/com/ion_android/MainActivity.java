@@ -23,8 +23,7 @@ public class MainActivity extends BaseActivity implements AuthListener{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //checkSessionState();
-        showUserLanding();
+        checkSessionState();
 
     }
 
@@ -111,9 +110,17 @@ public class MainActivity extends BaseActivity implements AuthListener{
         return true;
     }
 
+
     @Override
     public void onAuthenticationSucceeded() {
         startActivity(new Intent(this, PostsActivity.class));
+    }
+
+    public void onResume(){
+        super.onResume();
+
+        checkSessionState();
+
     }
 
     @Override

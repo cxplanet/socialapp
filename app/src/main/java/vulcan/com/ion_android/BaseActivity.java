@@ -13,6 +13,8 @@ import com.mobsandgeeks.saripaar.Validator;
 
 import java.util.List;
 
+import vulcan.com.ion_android.net.SessionMgr;
+
 /**
  * Created by jayl on 12/9/14.
  */
@@ -52,8 +54,17 @@ public class BaseActivity extends Activity implements Validator.ValidationListen
                 intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.action_logout:
+                SessionMgr.getInstance().logout();
+                intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                break;
             case R.id.action_new_post:
                 intent = new Intent(this, NewPostActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.action_new_video:
+                intent = new Intent(this, VideoPostActivity.class);
                 startActivity(intent);
                 break;
             case R.id.action_post_list:
@@ -63,6 +74,11 @@ public class BaseActivity extends Activity implements Validator.ValidationListen
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    protected void addAdditionalMenuItems(Menu menu)
+    {
+
     }
 
     protected void showToastMessage(String msg)

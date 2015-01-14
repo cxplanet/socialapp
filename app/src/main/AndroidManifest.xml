@@ -27,6 +27,10 @@
             android:label="New Post"
             android:parentActivityName=".PostsActivity"
             android:windowSoftInputMode="adjustResize|stateHidden"/>
+        <activity android:name=".VideoPostActivity"
+            android:label="New Video Post"
+            android:parentActivityName=".PostsActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden"/>
         <activity android:name=".PostDetailActivity"
             android:parentActivityName=".PostsActivity"
             android:label="Post Detail" />

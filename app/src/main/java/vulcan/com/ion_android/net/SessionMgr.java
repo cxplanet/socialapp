@@ -117,6 +117,17 @@ public class SessionMgr {
         }
     }
 
+    public void logout()
+    {
+        SharedPreferences.Editor editor = mPrefs.edit();
+
+        editor.putString(AUTH_TOKEN_KEY, "");
+        editor.putString(AUTH_TOKEN_TYPE_KEY, "");
+        editor.putString(REAUTH_TOKEN_KEY, "");
+
+        editor.commit();
+    }
+
     public AuthState getAuthState()
     {
         AuthState currState = AuthState.NO_TOKEN;
