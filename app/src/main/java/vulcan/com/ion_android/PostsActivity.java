@@ -79,7 +79,7 @@ public class PostsActivity extends BaseActivity {
         int itemId = item.getItemId();
         switch (itemId) {
             case R.id.actionbar_new_post:
-                startActivity(new Intent(this, NewPostActivity.class));
+                startActivity(new Intent(this, CameraActivity.class));
                 break;
         }
 

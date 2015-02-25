@@ -11,5 +11,6 @@
     <string name="main_activity_text">Social App is a collection of network aware activities that would be used with a social networking web service. Currently it uses data provided by the Yopp webservice.</string>
     <string name="login">Login</string>
     <string name="signup">Signup</string>
+    <string name="camera_activity">Camera</string>
 
 </resources>
