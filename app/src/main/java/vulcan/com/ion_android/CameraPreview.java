@@ -1,6 +1,7 @@
 package vulcan.com.ion_android;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.hardware.Camera;
@@ -55,6 +56,16 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
 
         // set preview size and make any resize, rotate or
         // reformatting changes here
+        // make any resize, rotate or reformatting changes here
+        if (this.getResources().getConfiguration().orientation != Configuration.ORIENTATION_LANDSCAPE) {
+
+            mCamera.setDisplayOrientation(90);
+
+        } else {
+
+            mCamera.setDisplayOrientation(0);
+
+        }
 
         // start preview with new settings
         try {

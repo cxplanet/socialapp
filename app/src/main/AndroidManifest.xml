@@ -28,6 +28,7 @@
         <activity android:name=".LoginActivity"
             android:label="@string/login_title" />
         <activity android:name=".CameraActivity"
+            android:screenOrientation="portrait"
             android:label="@string/camera_activity" />
         <activity android:name=".NewPostActivity"
             android:label="New Post"
